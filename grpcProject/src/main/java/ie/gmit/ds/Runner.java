@@ -1,10 +1,10 @@
-package ie.gmit.ds.grpcProject;
+package ie.gmit.ds;
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class Runner 
 {
     public static void main( String[] args )
     {
