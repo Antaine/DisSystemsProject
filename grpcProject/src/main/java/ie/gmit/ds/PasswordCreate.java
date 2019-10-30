@@ -16,7 +16,7 @@ import javax.crypto.spec.PBEKeySpec;
  * The hashed value has 256 bits.
  * Adapted from <a href="https://stackoverflow.com/questions/18142745/how-do-i-generate-a-salt-in-java-for-salted-hash">
  */
-public class Passwords {
+public class PasswordCreate {
 
     private static final Random RANDOM = new SecureRandom();
     private static final int ITERATIONS = 10000;
@@ -25,7 +25,7 @@ public class Passwords {
     /**
      * static utility class
      */
-    private Passwords() {
+    private PasswordCreate() {
     }
 
     /**
