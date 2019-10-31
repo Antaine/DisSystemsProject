@@ -1,52 +1,41 @@
 package ie.gmit.ds;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import com.google.protobuf.Empty;
+import com.google.protobuf.BoolValue;
+import com.google.protobuf.ByteString;
 
 import io.grpc.stub.StreamObserver;
 
 public class PasswordServiceImpl extends PasswordServiceGrpc.PasswordServiceImplBase {
 
-	private ArrayList<Passwords> passwordList;
-    private static final Logger logger =
-            Logger.getLogger(PasswordServiceImpl.class.getName());
+	private static final Logger logger = Logger.getLogger(PasswordServiceImpl.class.getName());
 
-    public PasswordServiceImpl() {
-        passwordList = new ArrayList<>();
-        
-        //createDummyItems();
-    }
+	public PasswordServiceImpl() {
 
-
-  /*  public void getPasswords(Empty request,
-                         StreamObserver<Passwords> responseObserver) {
-        Passwords.Builder passwords = Passwords.();
-        for (Item item : itemsList) {
-            items.addItems(item);
-        }
-        responseObserver.onNext(items.build());
-        responseObserver.onCompleted();
-    }
-*/
-    
-    /*
-    private void createDummyItems() {
-        itemsList.add(Item.newBuilder()
-                .setName("First Item")
-                .setId("001")
-                .setDescription("A cool item")
-                .build());
-        itemsList.add(Item.newBuilder()
-                .setName("Second Item")
-                .setId("002")
-                .setDescription("An even cooler item")
-                .build());
-        itemsList.add(Item.newBuilder()
-                .setName("Third Item")
-                .setId("003")
-                .setDescription("A crap item")
-                .build());
-    }*/
+	}
+	@Override
+	public void hashPassword(HashPasswordRequest req, StreamObserver<HashPasswordResponse> resObserver)
+	{
+		String pass = req.getPassword();
+		char[] hashPass = pass.toCharArray();
+		byte[] salt = PasswordCreate.getNextSalt();
+		byte[] finishedPass = PasswordCreate.hash(hashPass, salt);
+		
+		resObserver.onNext(HashPasswordResponse.newBuilder().setId(req.getId()).setPasswordHashed(ByteString.copyFrom(finishedPass))
+				.setSalt(ByteString.copyFrom(salt)).build());
+		resObserver.onCompleted();
+	}
+	
+	@Override
+	public void validateHash(ValidRequest req, StreamObserver resObserver)
+	{
+		char[] password = req.getPassword().toCharArray();
+		byte[] finishedPass = req.getPasswordHashed().toByteArray();
+		byte[] salt = req.getSalt().toByteArray();
+		
+		resObserver.equals(PasswordCreate.isExpectedPassword(password, salt, finishedPass));
+	}
+	
+	
 }

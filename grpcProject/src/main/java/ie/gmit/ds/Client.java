@@ -4,32 +4,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.protobuf.BoolValue;
-import com.google.protobuf.Empty;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
-import io.grpc.stub.StreamObserver;
 
-public class Client{
-	public static void main(String[] args) {
-	/*	Client client = new Client("localhost", 50551);
-        Item newItem = Item.newBuilder()
-                .setId("1234")
-                .setName("New Item")
-                .setDescription("Best New Item")
-                .build();
-        try {
-            client.addNewInventoryItem(newItem);
-            client.getItems();
-        } finally {
-            // Don't stop process, keep alive to receive async response
-            Thread.currentThread().join();
-        }*/
-   // }
-	/*
+public class Client {
+	
 	private static final Logger logger =
             Logger.getLogger(Client.class.getName());
     private final ManagedChannel channel;
@@ -44,61 +24,31 @@ public class Client{
        
     }
     
+	public static void main(String[] args) throws Exception {
+		Client client = new Client("localhost", 50551);
+
+        try {
+            client.HashPassword(13, "Tester");
+        } finally {
+            // Don't stop process, keep alive to receive async response
+            client.shutdown();
+        }
+    }
+    
     public void shutdown() throws InterruptedException {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
     
-    public void HashPassword(HashPasswordRequest newPass) {
-        logger.info("Hashing New Pass " + newPass);
-        BoolValue result = BoolValue.newBuilder().setValue(false).build();
-       HashPasswordResponse hashPass;
-       HashPasswordRequest hashValue; 
-       
-     /*  
+    public void HashPassword(int id, String pass) {
+        logger.info("Hashing Details: ID " + id + " Password " + pass);
+        HashPasswordRequest req = HashPasswordRequest.newBuilder().setId(id).setPassword(pass).build();
+        HashPasswordResponse res;
         try {
-            result = syncPasswordService.validateHash(hashValue);
+            res = syncPasswordService.hashPassword(req);
+            logger.info(res.toString());
         } catch (StatusRuntimeException ex) {
             logger.log(Level.WARNING, "RPC failed: {0}", ex.getStatus());
             return;
         }
-        if (result.getValue()) {
-            logger.info("Successfully added item " + newItem);
-        } else {
-            logger.warning("Failed to add item");
-        }
-    }
-
-    private void getItems() {
-        StreamObserver<Items> responseObserver = new StreamObserver<Items>() {
-            @Override
-            public void onNext(Items items) {
-                logger.info("Received items: " + items);
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                Status status = Status.fromThrowable(throwable);
-
-                logger.log(Level.WARNING, "RPC Error: {0}", status);
-            }
-
-            @Override
-            public void onCompleted() {
-                logger.info("Finished receiving items");
-                // End program
-                System.exit(0);
-            }
-        };
-
-        try {
-            logger.info("Requesting all items ");
-            asyncInventoryService.getItems(Empty.newBuilder().build(), responseObserver);
-            logger.info("Returned from requesting all items ");
-        } catch (
-                StatusRuntimeException ex) {
-            logger.log(Level.WARNING, "RPC failed: {0}", ex.getStatus());
-            return;
-        }
-    }
-*/
+ 
 	}}

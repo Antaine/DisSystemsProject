@@ -24,7 +24,7 @@ public class PassServer {
                 .addService(new PasswordServiceImpl())
                 .build()
                 .start();
-        logger.info("Server started, listening on " + PORT);
+        logger.info("Server started, listening for Password " + PORT);
 
     }
 
