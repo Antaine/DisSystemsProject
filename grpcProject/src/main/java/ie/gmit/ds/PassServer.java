@@ -21,7 +21,7 @@ public class PassServer {
     
     private void start() throws IOException {
         grpcServer = ServerBuilder.forPort(PORT)
- //               .addService(new InventoryServiceImpl())
+                .addService(new PasswordServiceImpl())
                 .build()
                 .start();
         logger.info("Server started, listening on " + PORT);
