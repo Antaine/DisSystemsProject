@@ -10,11 +10,25 @@ import io.grpc.StatusRuntimeException;
 
 public class Client {
 	
-	private static final Logger logger =
-            Logger.getLogger(Client.class.getName());
+	//Main
+	public static void main(String[] args) throws Exception {
+		//Create Client
+		Client client = new Client("localhost", 50551);
+
+		//Hash ID and Password
+        try {
+            client.HashPassword(13, "Tester");
+        } finally {
+            // Don't stop process, keep alive to receive async response
+            client.shutdown();
+        }
+    }//End of Main
+	
+	private static final Logger logger = Logger.getLogger(Client.class.getName());
     private final ManagedChannel channel;
     private final PasswordServiceGrpc.PasswordServiceBlockingStub syncPasswordService;
 
+    //Build Client
     public Client(String host, int port) {
         channel = ManagedChannelBuilder
                 .forAddress(host, port)
@@ -24,25 +38,19 @@ public class Client {
        
     }
     
-	public static void main(String[] args) throws Exception {
-		Client client = new Client("localhost", 50551);
 
-        try {
-            client.HashPassword(13, "Tester");
-        } finally {
-            // Don't stop process, keep alive to receive async response
-            client.shutdown();
-        }
-    }
-    
+    //Shutdown
     public void shutdown() throws InterruptedException {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
     
+    //Sends Hashed Password Request.
     public void HashPassword(int id, String pass) {
         logger.info("Hashing Details: ID " + id + " Password " + pass);
-        HashPasswordRequest req = HashPasswordRequest.newBuilder().setId(id).setPassword(pass).build();
-        HashPasswordResponse res;
+        //Creates Request
+        PasswordRequest req = PasswordRequest.newBuilder().setId(id).setPassword(pass).build();
+        PasswordResponse res;
+        //Get Response
         try {
             res = syncPasswordService.hashPassword(req);
             logger.info(res.toString());

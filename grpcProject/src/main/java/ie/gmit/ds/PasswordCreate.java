@@ -1,3 +1,4 @@
+//Helper Code
 package ie.gmit.ds;
 
 import java.security.NoSuchAlgorithmException;
@@ -22,30 +23,7 @@ public class PasswordCreate {
     private static final int ITERATIONS = 10000;
     private static final int KEY_LENGTH = 256;
 
-    
-    public static void main(String[] args) {
-        boolean isValid;
-        // Generate random password
-        String randomPassword = generateRandomPassword(6);
-        System.out.println("Random Password: " + randomPassword);
-        // Generate salt
-        byte[] salt = getNextSalt();
-        System.out.println("Salt: " + salt);
-        // Hash password
-        byte[] hashedPassword = hash(randomPassword.toCharArray(), salt);
-        System.out.println("Hashed Password: " + hashedPassword);
-
-        /**
-         * Check is valid, one true, one false
-         */
-        // True check
-        isValid = isExpectedPassword(randomPassword.toCharArray(), salt, hashedPassword);
-        System.out.println("Is Valid: " + isValid);
-        // False check
-        String newRandomPassword = generateRandomPassword(10);
-        isValid = isExpectedPassword(newRandomPassword.toCharArray(), salt, hashedPassword);
-        System.out.println("Is valid: " + isValid);
-    }
+   
     /**
      * static utility class
      */

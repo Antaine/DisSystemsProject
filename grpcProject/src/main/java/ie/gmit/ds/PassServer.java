@@ -8,17 +8,20 @@ import io.grpc.ServerBuilder;
 
 public class PassServer {
 
+	//Main
 	 public static void main(String[] args) throws IOException, InterruptedException {
+		 //Runs Server
 	        final PassServer Server = new PassServer();
 	        Server.start();
 	        Server.blockUntilShutdown();
-	    }
+	    }//End of Main
 
 	
 	private Server grpcServer;
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     private static final int PORT = 50551;
     
+    //Starts Server
     private void start() throws IOException {
         grpcServer = ServerBuilder.forPort(PORT)
                 .addService(new PasswordServiceImpl())
@@ -28,6 +31,7 @@ public class PassServer {
 
     }
 
+    //Ends Server
     private void stop() {
         if (grpcServer != null) {
             grpcServer.shutdown();
