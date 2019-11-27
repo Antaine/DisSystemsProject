@@ -1,5 +1,7 @@
 package ie.gmit.ds;
 
-public class UserApiConfig {
+import io.dropwizard.Configuration;
+
+public class UserApiConfig extends Configuration {
 
 }
