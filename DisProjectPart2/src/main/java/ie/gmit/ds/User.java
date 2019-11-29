@@ -58,5 +58,21 @@ public class User {
 	public String getPassword() {
 		return this.password;
 	}
+/*	
+public static void main(String[] args) throws Exception {
+		String password 
+		System.out.println("Enter Password: ");
+		String password = input.nextLine();
+		System.out.println("Enter ID: ");
+		int id = input.nextInt();
+		
+		
+		
+		UserClient client = new UserClient("localhost", 50051);
+		try {
+			client.hashPassword(id, password);
+		} finally {
+			client.shutdown();
+		}*/
+	}
 
-}
