@@ -18,41 +18,15 @@ import com.sun.research.ws.wadl.Response;
 @Produces(MediaType.APPLICATION_JSON)
 
 public class UserApiResources {
-	private static HashMap<Integer, User> usersMap = new HashMap<>();
 
-	public UserApiResources() {
-	    User testUser = new User(1,"Antaine","1234@gmail.com", "1234");
-	    usersMap.put(testUser.getId(), testUser);
-	}
+
 	
-	private Validator validator;
-	 
-    public void UserApiApllication(Validator validator) {
-        this.validator = validator;
-    }
-    
-    public static List <User> getUsers(){
-    	return new ArrayList<User>(usersMap.values());
-    }
-    
-    public User getUserById(int id)
-    {
-    	return usersMap.get(id);
-    }
-
-    public static void removeUser(Integer id){
-        usersMap.remove(id);
-    } 
-    
-    public static void updateUser(Integer id, User employee){
-        usersMap.put(id, employee);
-    }
      
 
- /*   @GET
+    @GET
     public Response getUsers() {
-        return Response.ok(EmployeeDB.getEmployees()).build();
-    }*/
+        return (Response) BackEnd.getUsers();
+    }
  /*
     @GET
     @Path("/{id}")
