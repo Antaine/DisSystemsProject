@@ -22,8 +22,25 @@ public class User {
 	}
 	
 	@JsonProperty
+	public void setId(int id)
+	{
+		this.userId = id;
+	}
+	
+	@JsonProperty
 	public String getName() {
 		return this.name;
+	}
+	
+	@JsonProperty
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	@JsonProperty
+	public void setEmail(String email)
+	{
+		this.email = email;
 	}
 	
 	@JsonProperty
@@ -32,7 +49,14 @@ public class User {
 	}
 	
 	@JsonProperty
+	public void setPassword(String pass)
+	{
+		this.password = pass;
+	}
+	
+	@JsonProperty
 	public String getPassword() {
 		return this.password;
 	}
+
 }
