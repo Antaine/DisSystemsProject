@@ -25,7 +25,7 @@ public class BackEnd {
     	return new ArrayList<User>(usersMap.values());
     }
     
-    public User getUserById(int id)
+    public static User getUserById(int id)
     {
     	return usersMap.get(id);
     }
